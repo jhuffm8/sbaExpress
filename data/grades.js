@@ -19,4 +19,6 @@ const grades = [
     },
 
 
-]
+];
+
+module.exports = grades;

@@ -3,9 +3,14 @@ const app = express();
 const port = 3200;
 const students = require('./data/students');
 const exp = require('constants');
+const student_grades = require('./data/grades')
+
 
 
 app.use(express.json());
+
+
+//get and post student info
 app
     .get('/students' , (req, res) => {
     res.json(students) 
@@ -26,6 +31,27 @@ app
         students.push(student);
         res.json(`Added ${req.body.name} successfully`)
     })
+    .delete('/students/:id', (req, res, next) => {
+        const student = students.find((s,i) => {
+            if(s.id == req.params.id){
+                students.splice(i, 1);
+                return true;
+            }
+        });
+
+        if(student) res.json(student);
+        else next()
+    });
+
+
+app
+    .get('/grades', (req, res) => {
+         res.json(student_grades)
+    })
+    .post('/grades/:id', (req, res) => {
+        
+    })
+
 
 
 
