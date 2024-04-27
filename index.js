@@ -3,7 +3,7 @@ const app = express();
 const port = 3200;
 const students = require('./data/students');
 const exp = require('constants');
-const student_grades = require('./data/grades')
+const student_grades = require('./data/grades');
 
 
 
@@ -46,11 +46,18 @@ app
 
 app
     .get('/grades', (req, res) => {
-         res.json(student_grades)
+        res.json(student_grades)
     })
-    .post('/grades/:id', (req, res) => {
-        
+    .get('/grades/:id', (req, res) => {
+        const grade= student_grades.find(i => i.id = req.params.id)
+         res.json(grade)
     })
+    .patch('/grades/:id' , (req, res) => { // does not add a new subject to student but add a whole new object
+        const grade= student_grades.find(i => i.id = req.params.id)
+        grade.subject = req.body.subject
+        res.send(grade)
+    });
+
 
 
 
